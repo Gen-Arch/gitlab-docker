@@ -3,21 +3,20 @@ services:
   gitlab:
     image: 'gitlab/gitlab-ee:latest'
     restart: always
-    #    hostname: 'gitlab.example.com'
-    #    environment:
-    #      GITLAB_OMNIBUS_CONFIG: |
-    #        external_url 'https://gitlab.example.com'
-    #        # Add any other gitlab.rb configuration here, each on its own line
+    hostname: 'gitlab.intanal.net'
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://gitlab.intanal.net'
     ports:
-      - '127.0.0.1:8080:80'
-      - '127.0.0.1:2022:22'
+      - '80:80'
+      - '22:22'
     volumes:
-      - '$GITLAB_HOME/config:/etc/gitlab'
-      - '$GITLAB_HOME/logs:/var/log/gitlab'
-      - '$GITLAB_HOME/data:/var/opt/gitlab'
+      - './gitlab/config:/etc/gitlab'
+      - './gitlab/logs:/var/log/gitlab'
+      - './gitlab/data:/var/opt/gitlab'
   runner:
     image: 'gitlab/gitlab-runner:latest'
     restart: always
     volumes:
-      - '$GITLAB_RUNNER_HOME/config:/etc/gitlab-runner'
+      - './gitlab-runner/config:/etc/gitlab-runner'
       - '/var/run/docker.sock:/var/run/docker.sock'
